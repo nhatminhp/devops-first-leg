@@ -1,0 +1,7 @@
+flask-jwt-auth/venv/
+
+flask-jwt-auth/.idea/
+
+flask-jwt-auth/__pycache__/
+
+.DS_Store
