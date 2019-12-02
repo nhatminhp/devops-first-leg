@@ -1,0 +1,25 @@
+---
+- hosts: aws
+  gather_facts: False
+  become: yes
+  tasks:
+    - name: update
+      raw: yum update -y
+
+    - name: install docker
+      raw: amazon-linux-extras install -y docker
+
+    - name: start docker service
+      raw: service docker start
+
+    - name: add the ec2-user to the docker group
+      raw: usermod -a -G docker ec2-user
+
+    - name: docker
+      raw: usermod -a -G docker ec2-user
+
+    - name: pull docker flask jwt auth
+      raw: docker pull nhatminhph/flask-jwt-auth:1.0.2
+
+    - name: run docker
+      raw: docker run -d --name flask_container -p 80:80 nhatminhph/flask-jwt-auth:1.0.2
