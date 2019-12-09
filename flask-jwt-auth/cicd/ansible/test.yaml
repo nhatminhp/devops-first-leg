@@ -22,7 +22,7 @@
       raw: docker ps -a | awk '{ print $1,$2 }' | grep nhatminhph/flask-jwt-auth:* | awk '{print $1 }' | xargs -I {} docker rm -f {}
 
     - name: pull docker flask jwt auth
-      raw: docker pull nhatminhph/flask-jwt-auth:1.0.2
+      raw: docker pull nhatminhph/flask-jwt-auth:1.0.7
 
     - name: run docker
-      raw: docker run -d --name flask_container -p 80:80 nhatminhph/flask-jwt-auth:1.0.2
+      raw: docker run -d --name flask_container -p 80:80 nhatminhph/flask-jwt-auth:1.0.7
