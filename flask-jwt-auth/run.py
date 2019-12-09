@@ -1,7 +1,6 @@
 from flask import Flask
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_mysqldb import MySQL
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 import os
@@ -14,26 +13,25 @@ APP_ROOT = os.path.join(os.path.dirname(__file__), '.')   # refers to applicatio
 dotenv_path = os.path.join(APP_ROOT, '.env')
 load_dotenv(dotenv_path)
 
-# app.config['MYSQL_HOST'] = 'db-annotator.cmj2loi1ze2d.ap-southeast-1.rds.amazonaws.com:3306'
-# app.config['MYSQL_USER'] = 'admin'
-# app.config['MYSQL_PASSWORD'] = '1234567890'
-# app.config['MYSQL_DB'] = 'auth-db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:1234567890@db-annotator.cmj2loi1ze2d.ap-southeast-1.rds.amazonaws.com:3306/auth-db'
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_PORT'] = os.getenv('MYSQL_PORT')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+
+db_url = "mysql://{}:{}@{}:{}/{}".format(app.config['MYSQL_USER'], app.config['MYSQL_PASSWORD'], app.config['MYSQL_HOST'], app.config['MYSQL_PORT'], app.config['MYSQL_DB'])
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secret-key'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db = SQLAlchemy(app)
 
-app.config['JWT_SECRET_KEY'] = 'jwt-secret-key'
+app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 jwt = JWTManager(app)
 
 
 @app.before_first_request
 def create_tables():
     db.create_all()
-
-
-app.config['JWT_SECRET_KEY'] = 'jwt-secret-key'
-jwt = JWTManager(app)
 
 
 import views, models, resources
