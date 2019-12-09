@@ -18,6 +18,9 @@
     - name: docker
       raw: usermod -a -G docker ec2-user
 
+    - name: remove all running container by image name
+      raw: docker ps -a | awk '{ print $1,$2 }' | grep nhatminhph/flask-jwt-auth:* | awk '{print $1 }' | xargs -I {} docker rm -f {}
+
     - name: pull docker flask jwt auth
       raw: docker pull nhatminhph/flask-jwt-auth:1.0.2
 

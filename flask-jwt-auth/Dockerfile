@@ -6,8 +6,8 @@ WORKDIR /srv/flask-jwt-auth
 RUN apt-get clean \
     && apt-get -y update
 
-RUN apt-get -y install nginx \
-    && apt-get -y install python3-dev \
+#RUN apt-get -y install nginx
+RUN apt-get -y install python3-dev \
     && apt-get -y install build-essential
 
 #RUN pip3 install virtualenv
@@ -18,6 +18,6 @@ RUN apt-get -y install nginx \
 
 RUN pip install -r requirements.txt
 
-COPY ./nginx/nginx.conf /etc/nginx
+#COPY ./nginx/nginx.conf /etc/nginx
 RUN chmod +x ./startup.sh
 CMD ["./startup.sh"]

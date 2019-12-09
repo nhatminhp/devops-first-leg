@@ -1,6 +1,7 @@
 flask-jwt-auth/venv/
 
 flask-jwt-auth/.idea/
+.idea
 
 flask-jwt-auth/__pycache__/
 
@@ -9,5 +10,4 @@ flask-jwt-auth/.env
 flask-jwt-auth/*.db
 
 .DS_Store
-
 
